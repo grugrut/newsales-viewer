@@ -10,7 +10,6 @@ jobs:
           name: Store Service Account
           command: echo ${GCOULD_SERVICE_KEY} > ${HOME}/gcloud-service-key.json
       - run: |
-          cat ${HOME}/gcloud-service-key.json
           gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
           gcloud app deploy --project ${PROJECT_ID}
           
