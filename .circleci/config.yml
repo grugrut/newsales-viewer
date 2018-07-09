@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - checkout
+      
+      - run:
+          name: Store Service Account
+          command: echo $GCOULD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+      - run: |
+          sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          sudo gcloud app deploy --project ${PROJECT_ID}
+          
