@@ -1,15 +1,25 @@
 version: 2
 jobs:
   build:
+    working_directory: /go/src/github.com/grugrut/newsales-viewer
     docker:
-      - image: google/cloud-sdk
+      - image: mercari/appengine-go
     steps:
       - checkout
-      
+      - run:
+          command: go get github.com/golang/lint/golint
+      - run: |
+          go get -u github.com/golang/dep/cmd/dep
+          dep ensure -v
+      - run:
+          command: go vet ./...
+      - run:
+          command: go list ./... | xargs golint -set_exit_status
+      - run:
+          command: go test ./...
       - run:
           name: Store Service Account
           command: echo ${GCLOUD_SERVICE_KEY} > ${HOME}/gcloud-service-key.json
       - run: |
           gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-          gcloud app deploy --project ${PROJECT_ID}
-
+          gcloud app deploy --project ${PROJECT_ID} app/app.yaml
