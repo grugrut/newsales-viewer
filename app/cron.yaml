@@ -1,0 +1,4 @@
+cron:
+- description: "daily job"
+  url: /tasks/crawling
+  schedule: every 24 hours
