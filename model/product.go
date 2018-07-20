@@ -2,15 +2,32 @@ package model
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"google.golang.org/appengine/datastore"
+	"time"
 )
 
 // Product dao for datastore
 type Product struct {
-	Name string
+	ID        string
+	Name      string
+	Publisher string
+	SaleDate  time.Time
+	NewsURL   string
+	ImgURL    string
+	Category  string
 }
 
-// AddProduct save new product
-func AddProduct(ctx context.Context, product Product) (*datastore.Key, error) {
-	return datastore.Put(ctx, datastore.NewIncompleteKey(ctx, "Product", nil), &product)
+// UpsertProduct save new product
+func UpsertProduct(ctx context.Context, key string, product Product) (*datastore.Key, error) {
+	return datastore.Put(ctx, datastore.NewKey(ctx, "Product", key, 0, nil), &product)
+}
+
+// MakeProduct create new Product object
+func MakeProduct(name string, publisher string, saleDate time.Time, newsURL string, imgURL string, category string) (string, Product) {
+	converted := sha256.Sum256([]byte(name))
+	id := hex.EncodeToString((converted[:]))
+	product := Product{Name: name, Publisher: publisher, SaleDate: saleDate, NewsURL: newsURL, ImgURL: imgURL, Category: category}
+	return id, product
 }

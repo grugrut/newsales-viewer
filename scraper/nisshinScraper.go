@@ -29,10 +29,10 @@ func NisshinScrape(ctx context.Context) {
 	doc.Find("#ns_main section.ns-posts--news ul.ns-posts-list li").Each(func(i int, s *goquery.Selection) {
 		date := s.Find("div.ns-posts-list-article-info em").Text()
 		product := strings.TrimSpace(s.Find("div.ns-posts-list-article-description a div h3").Text())
-		//		imgURL, _ := s.Find("div.ns-posts-list-article-description a figure span img").Attr("src")
+		imgURL, _ := s.Find("div.ns-posts-list-article-description a figure span img").Attr("src")
 		proURL, _ := s.Find("div.ns-posts-list-article-description a").Attr("href")
 		proURL = "https://www.nissin.com" + proURL
-		//		maker := s.Find("div.ns-posts-list-article-info span:nth-child(2) a").Text()
+		maker := s.Find("div.ns-posts-list-article-info span:nth-child(2) a").Text()
 
 		// 日清食品の場合は末尾が 「日発売)」であるかどうかで新商品情報かどうかを判断する
 		if strings.HasSuffix(product, "日発売)") {
@@ -64,8 +64,8 @@ func NisshinScrape(ctx context.Context) {
 					}
 					productDate = time.Date(y, productDate.Month(), productDate.Day(), 0, 0, 0, 0, time.Local)
 				}
-
-				model.AddProduct(ctx, model.Product{Name: productName})
+				key, product := model.MakeProduct(productName, maker, productDate, proURL, imgURL, "カップラーメン")
+				model.UpsertProduct(ctx, key, product)
 			}
 		}
 	})
