@@ -10,7 +10,6 @@ import (
 
 // Product dao for datastore
 type Product struct {
-	ID        string
 	Name      string
 	Publisher string
 	SaleDate  time.Time
