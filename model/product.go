@@ -30,3 +30,10 @@ func MakeProduct(name string, publisher string, saleDate time.Time, newsURL stri
 	product := Product{Name: name, Publisher: publisher, SaleDate: saleDate, NewsURL: newsURL, ImgURL: imgURL, Category: category}
 	return id, product
 }
+
+// FetchAllProduct fetch all product from datastore
+func FetchAllProduct(ctx context.Context) ([]Product, error) {
+	var products []Product
+	_, err := datastore.NewQuery("Product").GetAll(ctx, &products)
+	return products, err
+}
