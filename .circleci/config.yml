@@ -5,6 +5,10 @@ jobs:
     docker:
       - image: mercari/appengine-go
     steps:
+      - run: |
+          curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          sudo npm install -g npm
       - checkout
       - run:
           command: go get github.com/golang/lint/golint
@@ -12,11 +16,15 @@ jobs:
           go get -u github.com/golang/dep/cmd/dep
           dep ensure -v
       - run:
+          command: npm install
+      - run:
           command: go vet ./...
       - run:
           command: go list ./... | xargs golint -set_exit_status
       - run:
           command: go test ./...
+      - run:
+          command: ./node_modules/.bin/webpack
       - run:
           name: Store Service Account
           command: echo ${GCLOUD_SERVICE_KEY} > ${HOME}/gcloud-service-key.json
