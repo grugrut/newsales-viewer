@@ -9,9 +9,9 @@ jobs:
       - run:
           name: prepare npm
           command: |
-          curl -sL https://deb.nodesource.com/setup_8.x | bash -
-          apt-get install -y nodejs
-          npm install -g npm
+            curl -sqL https://deb.nodesource.com/setup_8.x | bash -
+            apt-get install -y nodejs
+            npm install -g npm
       - run:
           name: prepare golang tools
           command: |
