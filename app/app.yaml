@@ -3,6 +3,16 @@ api_version: go1
 version: 1
 
 handlers:
-    - url: /.*
-      script: _go_app
+  - url: /index.html
+    static_files: index.html
+    upload: index\.html
+    secure: always
+  - url: /bundle.js
+    static_files: bundle.js
+    upload: bundle.js
+    expiration: 10m
+    secure: always
+  - url: /.*
+    script: _go_app
+    secure: always
     

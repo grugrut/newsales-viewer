@@ -1,0 +1,28 @@
+{
+  "name": "newsales-viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grugrut/newsales-viewer.git"
+  },
+  "author": "grugrut",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/grugrut/newsales-viewer/issues"
+  },
+  "homepage": "https://github.com/grugrut/newsales-viewer#readme",
+  "dependencies": {
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0",
+    "eslint-plugin-vue": "^4.7.1",
+    "webpack": "^4.16.3",
+    "webpack-cli": "^3.1.0"
+  }
+}

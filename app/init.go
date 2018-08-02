@@ -6,7 +6,6 @@ import (
 	"github.com/grugrut/newsales-viewer/scraper"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
-	"html/template"
 	"net/http"
 )
 
@@ -17,8 +16,7 @@ func init() {
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("view/base.html", "view/main.html"))
-	tmpl.Execute(w, nil)
+	http.Redirect(w, r, "/index.html", http.StatusMovedPermanently)
 }
 
 func crawlTask(w http.ResponseWriter, r *http.Request) {
