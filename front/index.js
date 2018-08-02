@@ -1,6 +1,5 @@
 import Vue from 'vue';
 
-new Vue({
-    el: '#app',
-    data: {a: 'Hello, world'}
-});
+import App from './components/App.vue';
+
+new Vue(App).$mount('#app');

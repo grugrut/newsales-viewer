@@ -1,3 +1,5 @@
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 module.exports = {
     entry: './front/index.js',
     devtool: 'source-map',
@@ -5,9 +7,13 @@ module.exports = {
         filename: 'bundle.js',
         path: `${__dirname}/app`,
     },
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.esm.js'
-        }
-    }
+    module: {
+        rules: [
+            {test: /\.vue$/, loader: 'vue-loader'},
+        ]
+    },
+    plugins: [
+        new VueLoaderPlugin()
+    ]
+
 };
