@@ -5,31 +5,38 @@ jobs:
     docker:
       - image: mercari/appengine-go
     steps:
-      - run: |
+      - checkout
+      - run:
+          name: prepare npm
+          command: |
           curl -sL https://deb.nodesource.com/setup_8.x | bash -
           apt-get install -y nodejs
           npm install -g npm
-      - checkout
       - run:
-          command: go get github.com/golang/lint/golint
-      - run: |
-          go get -u github.com/golang/dep/cmd/dep
-          dep ensure -v
+          name: prepare golang tools
+          command: |
+            go get github.com/golang/lint/golint
+            go get -u github.com/golang/dep/cmd/dep
       - run:
-          command: npm install
+          name: retrieve dependencies
+          command: |
+            npm install
+            dep ensure -v
       - run:
-          command: go vet ./...
+          name: test
+          command: |
+            go vet ./...
+            go list ./... | xargs golint -set_exit_status
+            go test ./...
+            ./node_modules/.bin/eslint front
       - run:
-          command: go list ./... | xargs golint -set_exit_status
-      - run:
-          command: go test ./...
-      - run:
+          name: webpack
           command: ./node_modules/.bin/webpack
       - run:
-          name: Store Service Account
-          command: echo ${GCLOUD_SERVICE_KEY} > ${HOME}/gcloud-service-key.json
-      - run: |
-          gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-          appcfg.py update --application ${PROJECT_ID} --oauth2_access_token=$(gcloud auth print-access-token 2> /dev/null) app/app.yaml
-          appcfg.py update_cron --application ${PROJECT_ID} --oauth2_access_token=$(gcloud auth print-access-token 2> /dev/null) app
+          name: deploy
+          command: |
+            echo ${GCLOUD_SERVICE_KEY} > ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            appcfg.py update --application ${PROJECT_ID} --oauth2_access_token=$(gcloud auth print-access-token 2> /dev/null) app/app.yaml
+            appcfg.py update_cron --application ${PROJECT_ID} --oauth2_access_token=$(gcloud auth print-access-token 2> /dev/null) app
 
