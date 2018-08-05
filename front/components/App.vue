@@ -1,13 +1,20 @@
 <template>
-  <span>{{a}}</span>
+  <div>
+    <Product
+        v-for="product in products"
+        :product="product"
+    />
+  </div>
 </template>
 
 <script>
-  export default {
-  data () {
-  return {
-  a: 'Hello, world'
-  }
-  }
-  }
+ import Product from './Product.vue'
+ export default {
+     components: {
+         Product
+     },
+     created: function () {
+         
+     }
+ }
 </script>
