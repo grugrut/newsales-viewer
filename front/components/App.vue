@@ -5,7 +5,6 @@
     </v-toolbar>
     <v-card>
       <v-container
-          fluid
           grid-list-lg>
         <v-layout row wrap>
           <Product
