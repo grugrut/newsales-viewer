@@ -18,11 +18,14 @@
   "homepage": "https://github.com/grugrut/newsales-viewer#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vuetify": "^1.1.9"
   },
   "devDependencies": {
+    "css-loader": "^1.0.0",
     "eslint": "^5.2.0",
     "eslint-plugin-vue": "^4.7.1",
+    "style-loader": "^0.21.0",
     "vue-loader": "^15.2.6",
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.16.3",
