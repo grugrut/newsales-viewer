@@ -3,12 +3,18 @@
     <v-toolbar app>
       <v-toolbar-title>New Sales Viewer</v-toolbar-title>
     </v-toolbar>
-    <v-content>
-      <Product
-          v-for="product in products"
-          :product="product"
-      />
-    </v-content>
+    <v-card>
+      <v-container
+          fluid
+          grid-list-lg>
+        <v-layout row wrap>
+          <Product
+              v-for="product in products"
+              :product="product"
+          />
+        </v-layout>
+      </v-container>
+    </v-card>
   </v-app>
 </template>
 
