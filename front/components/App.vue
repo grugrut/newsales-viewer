@@ -9,12 +9,21 @@
 
 <script>
  import Product from './Product.vue'
+ import axios from 'axios'
  export default {
+     data() {
+         return {
+             products: []
+         }
+     },
      components: {
          Product
      },
-     created: function () {
-         
+     created() {
+         axios.get('/api/product')
+              .then(response => {
+                  this.products = response.data;
+              });
      }
  }
 </script>
