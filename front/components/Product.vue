@@ -8,6 +8,7 @@
       <v-card-title primary-title>
         <div>
           <h3 class="headline">{{ product.Name }}</h3>
+          <span>発売元: {{product.Publisher }}</span>
           <span>発売日: {{product.SaleDate.slice(0, 10)}}</span>
         </div>
       </v-card-title>
