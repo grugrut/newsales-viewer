@@ -1,5 +1,5 @@
 <template>
-  <v-flex sm6 md4>
+  <v-flex xs12 sm6 md3>
     <v-card>
       <v-card-media
           :src="product.ImgURL"

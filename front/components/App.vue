@@ -6,12 +6,15 @@
     <v-card>
       <v-container
           grid-list-lg>
-        <v-layout row wrap>
-          <Product
-              v-for="product in products"
-              :product="product"
-          />
-        </v-layout>
+        <div v-for="(value, key) in products">
+          <h3>{{key.slice(0, 10)}} 発売</h3>
+          <v-layout row wrap>
+            <Product
+                v-for="product in value"
+                :product="product"
+            />
+          </v-layout>
+        </div>
       </v-container>
     </v-card>
   </v-app>

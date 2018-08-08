@@ -7,6 +7,7 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
 	"net/http"
+	"time"
 )
 
 func init() {
@@ -40,7 +41,13 @@ func api(w http.ResponseWriter, r *http.Request) {
 				log.Errorf(ctx, err.Error())
 				http.Redirect(w, r, "/", http.StatusBadRequest)
 			}
-			result, err := json.Marshal(products)
+			var pMap = make(map[time.Time][]model.Product)
+			for _, product := range products {
+				pDate := product.SaleDate
+				ps := pMap[pDate]
+				pMap[pDate] = append(ps, product)
+			}
+			result, err := json.Marshal(pMap)
 			if err != nil {
 				log.Errorf(ctx, err.Error())
 				http.Redirect(w, r, "/", http.StatusBadRequest)
