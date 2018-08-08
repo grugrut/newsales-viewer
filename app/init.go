@@ -23,6 +23,8 @@ func crawlTask(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	log.Infof(ctx, "crawling start")
 	scraper.NisshinScrape(ctx)
+	scraper.AcecookScrape(ctx)
+	scraper.SanyoScrape(ctx)
 	log.Infof(ctx, "crawling end")
 }
 
