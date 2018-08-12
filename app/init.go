@@ -7,6 +7,7 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
 	"net/http"
+	"sort"
 	"time"
 )
 
@@ -47,7 +48,13 @@ func api(w http.ResponseWriter, r *http.Request) {
 				ps := pMap[pDate]
 				pMap[pDate] = append(ps, product)
 			}
-			result, err := json.Marshal(pMap)
+			var pList model.ProductDateList
+			for k, v := range pMap {
+				e := model.ProductDateEntry{k, v}
+				pList = append(pList, e)
+			}
+			sort.Sort(pList)
+			result, err := json.Marshal(pList)
 			if err != nil {
 				log.Errorf(ctx, err.Error())
 				http.Redirect(w, r, "/", http.StatusBadRequest)

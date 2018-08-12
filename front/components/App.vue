@@ -6,11 +6,11 @@
     <v-card>
       <v-container
           grid-list-lg>
-        <div v-for="(value, key) in products">
-          <h3>{{key.slice(0, 10)}} 発売</h3>
+        <div v-for="dateOfProduct in dateOfProducts">
+          <h3>{{dateOfProduct.SaleDate.slice(0, 10)}} 発売</h3>
           <v-layout row wrap>
             <Product
-                v-for="product in value"
+                v-for="product in dateOfProduct.Products"
                 :product="product"
             />
           </v-layout>
@@ -26,7 +26,7 @@
  export default {
      data() {
          return {
-             products: []
+             dateOfProducts: []
          }
      },
      components: {
@@ -35,7 +35,7 @@
      created() {
          axios.get('/api/product')
               .then(response => {
-                  this.products = response.data;
+                  this.dateOfProducts = response.data;
               });
      }
  }
