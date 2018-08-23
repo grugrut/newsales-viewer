@@ -3,7 +3,7 @@
     <v-card>
       <v-card-media
           :src="product.ImgURL"
-          height="400px"
+          height="200px"
       />
       <v-card-title primary-title>
         <div>
