@@ -36,10 +36,10 @@ func NisshinScrape(ctx context.Context) {
 
 		// 日清食品の場合は末尾が 「日発売)」であるかどうかで新商品情報かどうかを判断する
 		if strings.HasSuffix(product, "日発売)") {
-			prList := strings.SplitAfter(product, "」")
+			prList := strings.SplitAfter(product, "(")
 			if len(prList) >= 2 {
-				productName := strings.Join(prList[0:len(prList)-1], "")
-				tmpPDate := prList[len(prList)-1]
+				productName := strings.Join(prList[0:len(prList)-1], "(")
+				tmpPDate := "(" + prList[len(prList)-1]
 
 				df1 := "(2006年1月2日発売)"
 				df2 := "(1月2日発売)"
